@@ -37,16 +37,9 @@ struct ContentView: View {
                 }
                 
                 ForEach(0 ..< 3) { number in
-                    
                     Button(
                         action: { self.flagTapped(number) },
-                        label: {
-                            Image(self.countries[number])
-                                .renderingMode(.original)
-                                .clipShape(Capsule())
-                                .overlay(Capsule().stroke(Color.black, lineWidth: 1))
-                                .shadow(color: .black, radius: 2)
-                        }
+                        label: { createFlagImageView(imageName: self.countries[number]) }
                     )
                 }
                 
@@ -78,6 +71,14 @@ struct ContentView: View {
     private func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+    }
+    
+    private func createFlagImageView(imageName: String) -> some View {
+        return Image(imageName)
+            .renderingMode(.original)
+            .clipShape(Capsule())
+            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
+            .shadow(color: .black, radius: 2)
     }
 }
 
