@@ -14,6 +14,7 @@ struct ContentView: View {
     
     @State private var shouldShowScoreAlert = false
     @State private var scoreTitle = ""
+    @State private var alertMessage = ""
     
     var body: some View {
         ZStack {
@@ -38,7 +39,7 @@ struct ContentView: View {
                 
                 ForEach(0 ..< 3) { number in
                     Button(
-                        action: { self.flagTapped(number) },
+                        action: { self.onFlagTapped(number) },
                         label: { createFlagImageView(imageName: self.countries[number]) }
                     )
                 }
@@ -54,7 +55,7 @@ struct ContentView: View {
         .alert(isPresented: $shouldShowScoreAlert, content: {
             Alert(
                 title: Text(scoreTitle),
-                message: Text("Your score is \(scoreTitle)"),
+                message: Text(alertMessage),
                 dismissButton: .default(
                     Text("Continue"),
                     action: { self.askQuestion() }
@@ -63,11 +64,13 @@ struct ContentView: View {
         })
     }
     
-    private func flagTapped(_ number: Int) {
+    private func onFlagTapped(_ number: Int) {
         if number == correctAnswer {
             scoreTitle = "Correct"
+            alertMessage = "Your score is \(scoreTitle)"
         } else {
             scoreTitle = "Wrong"
+            alertMessage = "Wrong, that's the flag of \(countries[number])"
         }
         
         shouldShowScoreAlert = true
