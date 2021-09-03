@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
     
-    @State private var showingScore = false
+    @State private var shouldShowScoreAlert = false
     @State private var scoreTitle = ""
     
     var body: some View {
@@ -43,10 +43,15 @@ struct ContentView: View {
                     )
                 }
                 
+                if !scoreTitle.isEmpty {
+                    Text("Last sccore : \(scoreTitle)")
+                        .foregroundColor(.white)
+                }
+                
                 Spacer()
             }
         }
-        .alert(isPresented: $showingScore, content: {
+        .alert(isPresented: $shouldShowScoreAlert, content: {
             Alert(
                 title: Text(scoreTitle),
                 message: Text("Your score is \(scoreTitle)"),
@@ -65,7 +70,7 @@ struct ContentView: View {
             scoreTitle = "Wrong"
         }
         
-        showingScore = true
+        shouldShowScoreAlert = true
     }
     
     private func askQuestion() {
