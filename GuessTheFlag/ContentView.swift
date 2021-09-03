@@ -49,7 +49,7 @@ struct ContentView: View {
         .alert(isPresented: $showingScore, content: {
             Alert(
                 title: Text(scoreTitle),
-                message: Text("Your score is ???"),
+                message: Text("Your score is \(scoreTitle)"),
                 dismissButton: .default(
                     Text("Continue"),
                     action: { self.askQuestion() }
